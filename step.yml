@@ -1,0 +1,199 @@
+#
+# A couple of useful guides & docs:
+#
+# - Main Bitrise CLI docs: https://github.com/bitrise-io/bitrise/tree/master/_docs
+# - Step Development Guideline: https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+# - Bitrise.yml format spec: https://github.com/bitrise-io/bitrise/blob/master/_docs/bitrise-yml-format-spec.md
+# - Bitrise docs: http://devcenter.bitrise.io/
+# - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
+
+title: |-
+  DexProtector
+summary: |
+  Protect your Android or iOS app with DexProtector.
+description: |
+  Protect your Android or iOS app with DexProtector.
+  This Step allows you to integrate DexProtector into your Android or iOS app build as simply as possible using Bitrise.
+  Note: To use this Step, you need a valid DexProtector license.
+  For more information, visit [licelus.com](https://licelus.com/).
+
+  First, make sure that Bitrise has access to a repository containing all of the following:
+  your project’s source code; DexProtector (dexprotector.jar);
+  your DexProtector configuration file (dexprotector.xml).
+
+  You will also need the Base64 string of your DexProtector license file.
+  This string must be stored in the Secrets tab of the Bitrise Workflow Editor,
+  and passed from there as an input to this Step.
+
+  Visit [licelus.com](https://licelus.com/) for more information.
+  For licensing or other queries, please contact us at primary@licelus.com.
+
+  Example of project structure:
+  ```
+  /
+  +-- dexprotector
+  |   +-- dexprotector.jar
+  |   +-- dexprotector.xml
+  [YOUR PROJECT FILES]
+  ```
+
+website: https://github.com/dexprotector/bitrise-step-dexprotector
+source_code_url: https://github.com/dexprotector/bitrise-step-dexprotector
+support_url: https://github.com/dexprotector/bitrise-step-dexprotector/issues
+host_os_tags:
+  - osx-10.10
+  - ubuntu-16.04
+
+# If this step should be available only for certain project types
+# just uncomment this `project_type_tags` section and include all the
+# project types supported by the step. If the step can be used for all
+# project types then you can just remove this section.
+# If no `project_type_tags` specified (or specified as an empty array)
+# that means the step can be used for any project type.
+# You can find more information about project type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+#
+project_type_tags:
+  - android
+  - ios
+#   - macos
+#   - xamarin
+#   - react-native
+#   - cordova
+#   - ionic
+
+# Type tags are used for categorizing steps, for easier step discovery in Step Libraries.
+# You can find more information about type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+type_tags:
+  - utility
+
+is_requires_admin_user: false
+is_always_run: false
+is_skippable: false
+
+deps:
+  brew:
+    - name: java
+  apt_get:
+    - name: java
+
+
+toolkit:
+  bash:
+    entry_file: step.sh
+
+
+inputs:
+  - app_file:
+    opts:
+      title: Path to the app file to be protected
+      summary: "Path to the app file to be protected. For example: `$BITRISE_APK_PATH` for Android; `$BITRISE_IPA_PATH` for iOS."
+      is_expand: true
+      is_required: true
+  - jar_file:
+    opts:
+      title: Path to DexProtector JAR file
+      summary: Path to DexProtector JAR file. This must be in the same repository as your project.
+      is_expand: true
+      is_required: true
+  - config_file:
+    opts:
+      title: Path to DexProtector XML configuration file
+      summary: Path to DexProtector XML configuration file. This must be in the same repository as your project.
+      is_expand: true
+      is_required: true
+  - license_base64:
+    opts:
+      title: DexProtector license file Base64
+      summary: DexProtector license file encoded to Base64. To generate the Base64 string of the license file, you can use the bash command `base64 [PATH TO YOUR LICENSE FILE]`.
+      is_expand: true
+      is_required: true
+      is_sensitive: true
+  - app_platform: auto
+    opts:
+      title: Your app platform
+      summary: Specify your app’s platform. If you select the `auto` option, the application’s file extension will be used to determine the platform automatically.
+      value_options:
+        - auto
+        - Android
+        - iOS
+      is_expand: true
+      is_required: true
+  #  Android specific options
+  - sign_mode: '-'
+    opts:
+      category: Android specific options
+      title: APK signing mode
+      summary: "APK signing mode. Note: `-` means that this option will not be passed to DexProtector as a command line argument. Therefore, if you select `-`, the signing mode must be specified separately in the configuration file."
+      is_expand: true
+      value_options:
+        - '-'
+        - debug
+        - release
+        - google
+        - amazon
+        - none
+  - certificate:
+    opts:
+      category: Android specific options
+      title: Certificate location
+      summary: Certificate location. Specifies the path to the signing certificate file. This is necessary if you intend to re-sign the app after it has been DexProtected; this option is therefore only for when the sign mode == `none`. This option can also be specified via the configuration file.
+      is_expand: true
+  - sha256_certificate_fingerprint:
+    opts:
+      category: Android specific options
+      title: SHA256 certificate fingerprint of the target certificate
+      summary: "For `google` or `amazon` sign mode only. Specifies the target certificate's SHA256 certificate fingerprint. The value of this fingerprint can be found: Amazon: Amazon Developer Console, then go to settings of your application: Application -> Binary Files -> Appstore Certificate Hashes -> SHA-256 -> Hexadecimal. Google: Google Play Console, then go to settings of your application: App Signing -> App signing certificate -> SHA-256 certificate fingerprint"
+      is_expand: true
+      is_sensitive: true
+  - keystore: $BITRISEIO_ANDROID_KEYSTORE_URL
+    opts:
+      category: Android specific options
+      title: Path to keystore
+      summary: Path to keystore. For `release` sign mode only. Specifies the path to the keystore containing the relevant signing key. This option can also be specified in the configuration file.
+      is_expand: true
+  - storepass: $BITRISEIO_ANDROID_KEYSTORE_PASSWORD
+    opts:
+      category: Android specific options
+      title: Password for keystore integrity
+      summary: Password for keystore integrity. For `release` sign mode only. Specifies the password to the keystore containing the relevant signing key. This option can also be specified in the configuration file.
+      is_expand: true
+      is_sensitive: true
+  - keyalias: $BITRISEIO_ANDROID_KEYSTORE_ALIAS
+    opts:
+      category: Android specific options
+      title: Key alias
+      summary: Key alias. For `release` sign mode only. Specifies the alias string for the relevant signing key in your keystore. This option can also be specified in the configuration file.
+      is_expand: true
+  - keypass: $BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD
+    opts:
+      category: Android specific options
+      title: Password for the private key (if different)
+      summary: Password for the private key (if different). For `release` sign mode only. Specifies the password for the signing key. This option can also be specified in the configuration file.
+      is_expand: true
+      is_sensitive: true
+  - proguard_map_file: $BITRISE_MAPPING_PATH
+    opts:
+      category: Android specific options
+      title: ProGuard mapping file path
+      summary: ProGuard mapping file path. Specifies the path to ProGuard's ‘mappings.txt’ file. If you use ProGuard for name obfuscation, it is necessary to provide the path to ProGuard's map file so that DexProtector can locate classes for encryption. This option can also be specified in the configuration file.
+      is_expand: true
+  #  Debug
+  - verbose: no
+    opts:
+      category: Debug
+      title: Print the verbose protection build log to stdout. This option can also be specified in the configuration file.
+      value_options:
+        - yes
+        - no
+
+
+outputs:
+  - DEXPROTECTOR_PROTECTED_APP_FILE:
+    opts:
+      title: Path to the protected app file
+  - DEXPROTECTOR_LOG_FILE:
+    opts:
+      title: Path to the protection build log file
+      summary: Protection build log in .txt file format.
