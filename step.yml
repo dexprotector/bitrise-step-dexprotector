@@ -14,8 +14,8 @@ summary: |
 description: |
   Protect your Android or iOS app with DexProtector.
   This Step allows you to integrate DexProtector into your Android or iOS app build as simply as possible using Bitrise.
-  Note: To use this Step, you need a valid DexProtector license.
-  For more information, visit [licelus.com](https://licelus.com/).
+  Note: To use this Step, you need a valid DexProtector Enterprise Site license.
+  For more information, reach out to us at primary@licelus.com or visit [licelus.com](https://licelus.com/).
 
   First, make sure that Bitrise has access to a repository containing all of the following:
   your project’s source code; DexProtector (dexprotector.jar);
