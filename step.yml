@@ -15,15 +15,15 @@ description: |
   Protect your Android or iOS app with DexProtector.
   This Step allows you to integrate DexProtector into your Android or iOS app build as simply as possible using Bitrise.
   Note: To use this Step, you need a valid DexProtector Enterprise Site license.
-  For more information, reach out to us at primary@licelus.com or visit [licelus.com](https://licelus.com/).
 
   First, make sure that Bitrise has access to a repository containing all of the following:
   your project’s source code; DexProtector (dexprotector.jar);
   your DexProtector configuration file (dexprotector.xml).
 
   You will also need the Base64 string of your DexProtector license file.
-  This string must be stored in the Secrets tab of the Bitrise Workflow Editor,
-  and passed from there as an input to this Step.
+  For this you need do several steps:
+  1. Activate your license for getting `dexprotector.licel` file.
+  2. Generate Base64 of this file: for example you can use `base64 [PATH TO YOUR LICENSE FILE]`.
 
   Visit [licelus.com](https://licelus.com/) for more information.
   For licensing or other queries, please contact us at primary@licelus.com.
@@ -53,9 +53,9 @@ host_os_tags:
 # You can find more information about project type tags in the Step Development Guideline:
 # https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
 #
-project_type_tags:
-  - android
-  - ios
+#project_type_tags:
+#  - android
+#  - ios
 #   - macos
 #   - xamarin
 #   - react-native
@@ -144,7 +144,12 @@ inputs:
     opts:
       category: Android specific options
       title: SHA256 certificate fingerprint of the target certificate
-      summary: "For `google` or `amazon` sign mode only. Specifies the target certificate's SHA256 certificate fingerprint. The value of this fingerprint can be found: Amazon: Amazon Developer Console, then go to settings of your application: Application -> Binary Files -> Appstore Certificate Hashes -> SHA-256 -> Hexadecimal. Google: Google Play Console, then go to settings of your application: App Signing -> App signing certificate -> SHA-256 certificate fingerprint"
+      summary: |
+        For `google` or `amazon` sign mode only.
+        Specifies the target certificate's SHA256 certificate fingerprint.
+        The value of this fingerprint can be found:
+        Amazon: Amazon Developer Console, then go to settings of your application: Application -> Binary Files -> Appstore Certificate Hashes -> SHA-256 -> Hexadecimal.
+        Google: Google Play Console, then go to settings of your application: App Signing -> App signing certificate -> SHA-256 certificate fingerprint
       is_expand: true
       is_sensitive: true
   - keystore: $BITRISEIO_ANDROID_KEYSTORE_URL
@@ -185,8 +190,8 @@ inputs:
       category: Debug
       title: Print the verbose protection build log to stdout. This option can also be specified in the configuration file.
       value_options:
-        - yes
-        - no
+        - 'yes'
+        - 'no'
 
 
 outputs:
