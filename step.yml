@@ -13,8 +13,8 @@ summary: |
   Protect your Android or iOS app with DexProtector.
 description: |-
   Protect your Android or iOS app with DexProtector.
-  This Step allows you to integrate DexProtector into your Android or iOS app build as simply as possible using Bitrise.<br>
-  Note: To use this Step, you need a valid DexProtector Enterprise license.<br><br>
+  This Step allows you to integrate DexProtector into your Android or iOS app build as simply as possible using Bitrise.
+  Note: To use this Step, you need a valid DexProtector Enterprise license.
 
   First, make sure that Bitrise has access to a repository containing all of the following:
   - your project's source code
@@ -22,13 +22,13 @@ description: |-
   - your customized DexProtector configuration file (dexprotector.xml).
 
   You will also need the Base64 string of your DexProtector license file.
-  This string must be stored in the Secrets tab of the Bitrise Workflow Editor.<br>
+  This string must be stored in the Secrets tab of the Bitrise Workflow Editor.
   For this you need to:
   1. Activate your license to create your `dexprotector.licel` file.
   2. Generate the Base64 of this file. You can use the command `base64 [PATH TO YOUR LICENSE FILE]`.
 
-  Visit [licelus.com](https://licelus.com/products/dexprotector/docs) for more information on activating your license and customizing your configuration file.<br>
-  For licensing or other queries, please contact us at primary@licelus.com.<br><br>
+  Visit [licelus.com](https://licelus.com/products/dexprotector/docs) for more information on activating your license and customizing your configuration file.
+  For licensing or other queries, please contact us at primary@licelus.com.
 
   Example of project structure:
   ```
