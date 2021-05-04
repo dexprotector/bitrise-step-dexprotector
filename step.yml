@@ -18,7 +18,7 @@ description: |
 
   First, make sure that Bitrise has access to a repository containing all of the following:
   - your project's source code; DexProtector (dexprotector.jar);
-  - your DexProtector configuration file (dexprotector.xml).
+  - your customized DexProtector configuration file (dexprotector.xml).
 
   You will also need the Base64 string of your DexProtector license file.
   This string must be stored in the Secrets tab of the Bitrise Workflow Editor.<br>
@@ -26,7 +26,7 @@ description: |
   1. Activate your license to create your `dexprotector.licel` file.
   2. Generate the Base64 of this file. You can use the command `base64 [PATH TO YOUR LICENSE FILE]`.
 
-  Visit [licelus.com](https://licelus.com/products/dexprotector/docs) for more information on activating your license.<br>
+  Visit [licelus.com](https://licelus.com/products/dexprotector/docs) for more information on activating your license and customizing your configuration file.<br>
   For licensing or other queries, please contact us at primary@licelus.com.
 
   Example of project structure:
