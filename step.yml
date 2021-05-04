@@ -1,5 +1,5 @@
 #
-# A couple of useful guides & docs:
+# Some useful guides & docs:
 #
 # - Main Bitrise CLI docs: https://github.com/bitrise-io/bitrise/tree/master/_docs
 # - Step Development Guideline: https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
@@ -13,19 +13,20 @@ summary: |
   Protect your Android or iOS app with DexProtector.
 description: |
   Protect your Android or iOS app with DexProtector.
-  This Step allows you to integrate DexProtector into your Android or iOS app build as simply as possible using Bitrise.
-  Note: To use this Step, you need a valid DexProtector Enterprise Site license.
+  This Step allows you to integrate DexProtector into your Android or iOS app build as simply as possible using Bitrise.<br>
+  Note: To use this Step, you need a valid DexProtector Enterprise license.
 
   First, make sure that Bitrise has access to a repository containing all of the following:
-  your project’s source code; DexProtector (dexprotector.jar);
-  your DexProtector configuration file (dexprotector.xml).
+  - your project's source code; DexProtector (dexprotector.jar);
+  - your customized DexProtector configuration file (dexprotector.xml).
 
   You will also need the Base64 string of your DexProtector license file.
-  For this you need do several steps:
-  1. Activate your license for getting `dexprotector.licel` file.
-  2. Generate Base64 of this file: for example you can use `base64 [PATH TO YOUR LICENSE FILE]`.
+  This string must be stored in the Secrets tab of the Bitrise Workflow Editor.<br>
+  For this you need to:
+  1. Activate your license to create your `dexprotector.licel` file.
+  2. Generate the Base64 of this file. You can use the command `base64 [PATH TO YOUR LICENSE FILE]`.
 
-  Visit [licelus.com](https://licelus.com/) for more information.
+  Visit [licelus.com](https://licelus.com/products/dexprotector/docs) for more information on activating your license and customizing your configuration file.<br>
   For licensing or other queries, please contact us at primary@licelus.com.
 
   Example of project structure:
@@ -88,7 +89,7 @@ inputs:
   - app_file:
     opts:
       title: Path to the app file to be protected
-      summary: "Path to the app file to be protected. For example: `$BITRISE_APK_PATH` for Android; `$BITRISE_IPA_PATH` for iOS."
+      summary: "Path to the app file to be protected. For example: `$BITRISE_APK_PATH` or `$BITRISE_AAB_PATH` for Android; `$BITRISE_IPA_PATH` for iOS."
       is_expand: true
       is_required: true
   - jar_file:

@@ -9,7 +9,7 @@ app:
     - LICENSE_BASE64: $LICENSE_BASE64
     # If you want to share this step into a StepLib
     - BITRISE_STEP_ID: dexprotector
-    - BITRISE_STEP_VERSION: "1.0.1"
+    - BITRISE_STEP_VERSION: "1.0.2"
     - BITRISE_STEP_GIT_CLONE_URL: https://github.com/dexprotector/bitrise-step-dexprotector.git
     - MY_STEPLIB_REPO_FORK_GIT_URL: git@github.com:dexprotector/bitrise-steplib.git
 
