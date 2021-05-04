@@ -89,7 +89,7 @@ inputs:
   - app_file:
     opts:
       title: Path to the app file to be protected
-      summary: "Path to the app file to be protected. For example: `$BITRISE_APK_PATH` for Android; `$BITRISE_IPA_PATH` for iOS."
+      summary: "Path to the app file to be protected. For example: `$BITRISE_APK_PATH` or `$BITRISE_AAB_PATH` for Android; `$BITRISE_IPA_PATH` for iOS."
       is_expand: true
       is_required: true
   - jar_file:
