@@ -18,8 +18,8 @@ description: |-
 
   First, make sure that Bitrise has access to a repository containing all of the following:
   - your project's source code
-  - DexProtector (dexprotector.jar);
-  - your customized DexProtector configuration file (dexprotector.xml).
+  - DexProtector (dexprotector.jar)
+  - your customized DexProtector configuration file (dexprotector.xml)
 
   You will also need the Base64 string of your DexProtector license file.
   This string must be stored in the Secrets tab of the Bitrise Workflow Editor.
