@@ -187,7 +187,7 @@ inputs:
       summary: ProGuard mapping file path. Specifies the path to ProGuard's ‘mappings.txt’ file. If you use ProGuard for name obfuscation, it is necessary to provide the path to ProGuard's map file so that DexProtector can locate classes for encryption. This option can also be specified in the configuration file.
       is_expand: true
   #  Debug
-  - verbose: no
+  - verbose: 'no'
     opts:
       category: Debug
       title: Print the verbose protection build log to stdout. This option can also be specified in the configuration file.
